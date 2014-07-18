@@ -83,7 +83,7 @@
 * @max = 1
 * @group = AeroCore
 */
-PARAM_DEFINE_INT32(AEROCORE_RC, 0);
+PARAM_DEFINE_INT32(AEROCORE_RC, 1);
 
 /****************************************************************************
  * Pre-Processor Definitions

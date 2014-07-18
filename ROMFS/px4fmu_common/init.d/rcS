@@ -115,22 +115,26 @@ then
 	# Set default values
 	#
 	set HIL no
-	set VEHICLE_TYPE none
-	set MIXER none
-	set OUTPUT_MODE none
-	set PWM_OUTPUTS none
-	set PWM_RATE none
-	set PWM_DISARMED none
-	set PWM_MIN none
-	set PWM_MAX none
+	#set VEHICLE_TYPE none
+	set VEHICLE_TYPE mc 
+	#set MIXER none
+	set MIXER FMU_quad_x
+	#set USE_IO yes
+	set USE_IO no
+	set SYS_USE_IO 0
+	set OUTPUT_MODE fmu
+	#set OUTPUT_MODE pwm 
+	set PWM_OUTPUTS 1235
+	set PWM_RATE 400
+	set PWM_DISARMED 0
+	set PWM_MIN 1000
+	set PWM_MAX 2000
+	#set MKBLCTRL_MODE none
 	set MKBLCTRL_MODE none
 	set FMU_MODE pwm
-	set MAVLINK_FLAGS default
-	set EXIT_ON_END no
-	set MAV_TYPE none
+	#set MAV_TYPE none
+	set MAV_TYPE 2
 	set LOAD_DEFAULT_APPS yes
-	set GPS yes
-	set GPS_FAKE no
 
 	#
 	# Set DO_AUTOCONFIG flag to use it in AUTOSTART scripts
@@ -244,7 +248,7 @@ then
 	#
 	# Set default output if not set
 	#
-	if [ $OUTPUT_MODE == none ]
+	if [ $OUTPUT_MODE == none]
 	then
 		if [ $USE_IO == yes ]
 		then
@@ -435,17 +439,22 @@ then
 	#
 	if [ $MAVLINK_FLAGS == default ]
 	then
-		# Normal mode, use baudrate 57600 (default) and data rate 1000 bytes/s
-		if [ $TTYS1_BUSY == yes ]
+		if ver hwcmp AEROCORE
 		then
-			# Start MAVLink on ttyS0, because FMU ttyS1 pins configured as something else
-			set MAVLINK_FLAGS "-r 1000 -d /dev/ttyS0"
-
-			# Exit from nsh to free port for mavlink
-			set EXIT_ON_END yes
+			set MAVLINK_FLAGS "-r 1000 -d /dev/ttyS2 -b 115200"
 		else
-			# Start MAVLink on default port: ttyS1
-			set MAVLINK_FLAGS "-r 1000"
+			# Normal mode, use baudrate 57600 (default) and data rate 1000 bytes/s
+			if [ $TTYS1_BUSY == yes ]
+			then
+				# Start MAVLink on ttyS0, because FMU ttyS1 pins configured as something else
+				set MAVLINK_FLAGS "-r 1000 -d /dev/ttyS0"
+
+				# Exit from nsh to free port for mavlink
+				set EXIT_ON_END yes
+			else
+				# Start MAVLink on default port: ttyS1
+				set MAVLINK_FLAGS "-r 1000"
+			fi
 		fi
 	fi
 

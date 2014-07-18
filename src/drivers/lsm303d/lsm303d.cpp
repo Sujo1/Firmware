@@ -1916,6 +1916,7 @@ test()
 	warnx("mag z: \t%d\traw", (int)m_report.z_raw);
 	warnx("mag range: %8.4f ga", (double)m_report.range_ga);
 
+
 	/* XXX add poll-rate tests here too */
 
         close(fd_accel);
