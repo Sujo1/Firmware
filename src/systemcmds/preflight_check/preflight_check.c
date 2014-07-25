@@ -97,9 +97,6 @@ int preflight_check_main(int argc, char *argv[])
 		goto system_eval;
 	}
 	ret = ioctl(fd, MAGIOCSELFTEST, 0);
-	printf("\nResult of ret:\n");
-	printf(ret);
-	printf("\n");
 	if (ret != OK) {
 		warnx("magnetometer calibration missing or bad - calibrate magnetometer first");
 		mavlink_log_critical(mavlink_fd, "SENSOR FAIL: MAG CHECK/CAL");

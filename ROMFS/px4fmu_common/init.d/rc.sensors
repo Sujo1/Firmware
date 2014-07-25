@@ -35,10 +35,9 @@ then
 	then
 		echo "[init] Using LSM303D"
 	fi
-	if input_pwm start
-	then
-		echo "[init] Using PWM RC Input"
-	fi
+	sh /etc/init.d/rc.mc_apps
+	set MAVLINK_FLAGS "-r 1000 -d /dev/ttyS2 -b 115200"
+	mavlink start $MAVLINK_FLAGS
 fi
 
 # Start airspeed sensors

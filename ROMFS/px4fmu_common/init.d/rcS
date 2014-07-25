@@ -572,11 +572,13 @@ then
 
 		# Load mixer and configure outputs
 		sh /etc/init.d/rc.interface
-
 		# Start standard multicopter apps
 		if [ $LOAD_DEFAULT_APPS == yes ]
 		then
+			echo "[init] Started App Script"
 			sh /etc/init.d/rc.mc_apps
+		else
+			echo "Did not start the script"
 		fi
 	fi
 
@@ -613,6 +615,5 @@ then
 		echo "[init] Exit from nsh"
 		exit
 	fi
-
 # End of autostart
 fi
